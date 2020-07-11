@@ -39,9 +39,14 @@ def details(name):
 
 def port_scan():
     import socket
+    import subprocess
     import sys
     from datetime import datetime
 
+    # Clear the screen
+    subprocess.call('clear', shell=True)
+
+    # Ask for input
     remoteServer = input("Enter a remote host to scan: ")
     target = socket.gethostbyname(remoteServer)
 
@@ -53,8 +58,12 @@ def port_scan():
     # Check what time the scan started
     t1 = datetime.now()
 
+    # Using the range function to specify ports (here it will scans all ports between 1 and 1024)
+
+    # We also put in some error handling for catching errors
+
     try:
-        for port in range(1, 1025):
+        for port in range(1, 200):
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             result = sock.connect_ex((target, port))
             if result == 0:
@@ -99,7 +108,7 @@ def location():
         result = requests.get('https://ipvigilante.com/' + ko)
         k = result.text
         res = json.loads(k)
-        print(res[0].item)
+        # print(res[0].item)
         for key, value in res.items():
             if key == 'data':
                 for i, j in value.items():
@@ -124,6 +133,7 @@ def location():
                     print(i, ' : ', j)
             else:
                 print(key, ' : ', value)
+
 
 while True:
 
